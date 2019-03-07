@@ -35,7 +35,7 @@ node {
                     env.IS_TO_DEPLOY = input message: 'Input required',
                     parameters: [choice(name: 'Deploy', choices: 'no\nyes', description: 'Choose "yes" if you want to deploy this build')]
                   }
-                  sh "echo ${ENVIRONMENT_NAME}"
+                  sh "echo 'messages are ${env.IS_TO_DEPLOY}'"
               }
 
         stage ('Deploy') {
@@ -49,6 +49,7 @@ node {
             }else if (ENVIRONMENT_NAME == 'prod') {
               DEPLOYMENT_TARGET = PROD_SERVER
             }
+
           }
 
           sh "echo 'Deploying to ${DEPLOYMENT_TARGET} for branch name ${ENVIRONMENT_NAME}'"
