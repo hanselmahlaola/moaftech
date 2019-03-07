@@ -1,3 +1,4 @@
+def INPUT_PARAMS
 node {
  	// Clean workspace before doing anything
     deleteDir()
@@ -17,7 +18,7 @@ node {
         	checkout scm
         }
         stage ('install dependencies') {
-        	sh "echo 'shell scripts to build project...'"${ENVIRONMENT_NAME}
+        	sh "echo 'shell scripts to build project...'"
         }
         stage ('Tests') {
 	        parallel 'static': {
