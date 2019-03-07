@@ -32,12 +32,10 @@ node {
         }
 
         stage('Do you want to deploy?') {
-            steps {
                 script {
                     env.TAG_ON_DOCKER_HUB = input message: 'User input required',
                     parameters: [choice(name: 'Tag on Docker Hub', choices: 'no\nyes', description: 'Choose "yes" if you want to deploy this build')]
                   }
-                }
               }
 
         // stage ('Deploy') {
