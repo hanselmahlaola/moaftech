@@ -31,17 +31,15 @@ node {
 	        }
         }
 
-        stage('Deploy if dev') {
-            when {
-            expression {
-                return env.BRANCH_NAME != 'uat';
-                }
-            }
+        stage('Do you want to deploy?') {
+          agent none
             steps {
-                echo 'run this stage - when branch is not equal to uat'
-            }
-        }
-
+                script {
+                    env.TAG_ON_DOCKER_HUB = input message: 'User input required',
+                    parameters: [choice(name: 'Tag on Docker Hub', choices: 'no\nyes', description: 'Choose "yes" if you want to deploy this build')]
+                  }
+                }
+              }
 
         stage ('Deploy') {
           script {
