@@ -37,7 +37,7 @@ node {
                     env.IS_TO_DEPLOY = input message: 'Input required',
                     parameters: [choice(name: 'Deploy', choices: 'no\nyes', description: 'Choose "yes" if you want to deploy this build')]
                   }
-                  sh "echo ${INPUT_PARAMS}"
+                  sh "echo ${ENVIRONMENT_NAME}"
               }
 
         // stage ('Deploy') {
@@ -52,10 +52,10 @@ node {
         //       DEPLOYMENT_TARGET = PROD_SERVER
         //     }
         //   }
-        //       sh 'ssh '${USER_NAME}'@'${DEPLOYMENT_TARGET}' rm -rf /tmp/deployment/dist/'
-        //       sh 'ssh '${USER_NAME}'@'${DEPLOYMENT_TARGET}' mkdir -p /tmp/deployment/'
-        //       sh 'scp -r dist '${USER_NAME}'@'${DEPLOYMENT_TARGET}':/tmp/deployment/'
-        //       sh 'ssh '${USER_NAME}'@'${DEPLOYMENT_TARGET}' “rm -rf /var/www/example.com/dist/ && mv /var/www/temp_deploy/dist/ /var/www/example.com/”'
+        //       sh 'ssh ${USER_NAME}@${DEPLOYMENT_TARGET} rm -rf /tmp/deployment/dist/'
+        //       sh 'ssh ${USER_NAME}@${DEPLOYMENT_TARGET} mkdir -p /tmp/deployment/'
+        //       sh 'scp -r dist ${USER_NAME}@${DEPLOYMENT_TARGET}:/tmp/deployment/'
+        //       sh 'ssh '${USER_NAME}@${DEPLOYMENT_TARGET} “rm -rf /var/www/example.com/dist/ && mv /var/www/temp_deploy/dist/ /var/www/example.com/”'
         // }
 
     } catch (err) {
