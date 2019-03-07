@@ -1,4 +1,4 @@
-def INPUT_PARAMS
+def INPUT_PARAMS = "test here yoh!!"
 node {
  	// Clean workspace before doing anything
     deleteDir()
@@ -37,6 +37,7 @@ node {
                     env.IS_TO_DEPLOY = input message: 'Input required',
                     parameters: [choice(name: 'Deploy', choices: 'no\nyes', description: 'Choose "yes" if you want to deploy this build')]
                   }
+                  sh "echo ${INPUT_PARAMS}"
               }
 
         // stage ('Deploy') {
