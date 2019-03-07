@@ -6,7 +6,7 @@ node {
         stage ('Clone') {
         	checkout scm
         }
-        stage ('Build') {
+        stage ('install dependencies') {
         	sh "echo 'shell scripts to build project...'"
         }
         stage ('Tests') {
@@ -20,6 +20,18 @@ node {
 	            sh "echo 'shell scripts to run integration tests...'"
 	        }
         }
+
+        stage('Deploy if dev') {
+            when {
+            expression {
+                return env.BRANCH_NAME != 'uat';
+                }
+            }
+            steps {
+                echo 'run this stage - when branch is not equal to uat'
+            }
+        }
+        
       	stage ('Deploy') {
             sh "echo 'shell scripts to deploy to server...'"
       	}
