@@ -34,7 +34,7 @@ node {
         stage('Do you want to deploy?') {
                 script {
                     env.IS_TO_DEPLOY = input message: 'Input required',
-                    parameters: [choice(name: 'Deploy to '${ENV_NAME}, choices: 'no\nyes', description: 'Choose "yes" if you want to deploy this build')]
+                    parameters: [choice(name: 'Deploy', choices: 'no\nyes', description: 'Choose "yes" if you want to deploy this build')]
                   }
               }
 
