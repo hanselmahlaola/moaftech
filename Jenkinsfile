@@ -41,23 +41,23 @@ node {
                 }
               }
 
-        stage ('Deploy') {
-          script {
-            if (ENVIRONMENT_NAME == 'dev') {
-                  DEPLOYMENT_TARGET = DEV_SERVER
-            } else if (ENVIRONMENT_NAME == 'uat') {
-              DEPLOYMENT_TARGET = UAT_SERVER
-            }else if (ENVIRONMENT_NAME == 'sit') {
-              DEPLOYMENT_TARGET = SIT_SERVER
-            }else if (ENVIRONMENT_NAME == 'prod') {
-              DEPLOYMENT_TARGET = PROD_SERVER
-            }
-          }
-              sh 'ssh '${USER_NAME}'@'${DEPLOYMENT_TARGET}' rm -rf /tmp/deployment/dist/'
-              sh 'ssh '${USER_NAME}'@'${DEPLOYMENT_TARGET}' mkdir -p /tmp/deployment/'
-              sh 'scp -r dist '${USER_NAME}'@'${DEPLOYMENT_TARGET}':/tmp/deployment/'
-              sh 'ssh '${USER_NAME}'@'${DEPLOYMENT_TARGET}' “rm -rf /var/www/example.com/dist/ && mv /var/www/temp_deploy/dist/ /var/www/example.com/”'
-        }
+        // stage ('Deploy') {
+        //   script {
+        //     if (ENVIRONMENT_NAME == 'dev') {
+        //           DEPLOYMENT_TARGET = DEV_SERVER
+        //     } else if (ENVIRONMENT_NAME == 'uat') {
+        //       DEPLOYMENT_TARGET = UAT_SERVER
+        //     }else if (ENVIRONMENT_NAME == 'sit') {
+        //       DEPLOYMENT_TARGET = SIT_SERVER
+        //     }else if (ENVIRONMENT_NAME == 'prod') {
+        //       DEPLOYMENT_TARGET = PROD_SERVER
+        //     }
+        //   }
+        //       sh 'ssh '${USER_NAME}'@'${DEPLOYMENT_TARGET}' rm -rf /tmp/deployment/dist/'
+        //       sh 'ssh '${USER_NAME}'@'${DEPLOYMENT_TARGET}' mkdir -p /tmp/deployment/'
+        //       sh 'scp -r dist '${USER_NAME}'@'${DEPLOYMENT_TARGET}':/tmp/deployment/'
+        //       sh 'ssh '${USER_NAME}'@'${DEPLOYMENT_TARGET}' “rm -rf /var/www/example.com/dist/ && mv /var/www/temp_deploy/dist/ /var/www/example.com/”'
+        // }
 
     } catch (err) {
         currentBuild.result = 'FAILED'
