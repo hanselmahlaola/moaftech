@@ -1,47 +1,30 @@
-node{
-  stages{
-    stage ('checkout'){
-      steps{
-        checkout scm
-      }
+node {
+ 	// Clean workspace before doing anything
+    deleteDir()
+
+    try {
+        stage ('Clone') {
+        	checkout scm
+        }
+        stage ('Build') {
+        	sh "echo 'shell scripts to build project...'"
+        }
+        stage ('Tests') {
+	        parallel 'static': {
+	            sh "echo 'shell scripts to run static tests...'"
+	        },
+	        'unit': {
+	            sh "echo 'shell scripts to run unit tests...'"
+	        },
+	        'integration': {
+	            sh "echo 'shell scripts to run integration tests...'"
+	        }
+        }
+      	stage ('Deploy') {
+            sh "echo 'shell scripts to deploy to server...'"
+      	}
+    } catch (err) {
+        currentBuild.result = 'FAILED'
+        throw err
     }
-    stage ('install modules'){
-      steps{
-        sh '''
-          npm install --verbose -d
-          npm install --save classlist.js
-        '''
-      }
-    }
-    stage ('test'){
-      steps{
-        sh '''
-          $(npm bin)/ng test --single-run --browsers Chrome_no_sandbox
-        '''
-      }
-      post {
-          always {
-            junit "test-results.xml"
-          }
-      }
-    }
-    stage ('code quality'){
-      steps{
-        sh '$(npm bin)/ng lint'
-      }
-    }
-    stage ('build') {
-      steps{
-        sh '$(npm bin)/ng build --prod --build-optimizer'
-      }
-    }
-    stage ('build image') {
-      steps{
-        sh '''
-          rm -rf node_modules
-          oc start-build angular-5-example --from-dir=. --follow
-        '''
-      }
-    }
-  }
 }
