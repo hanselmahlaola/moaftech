@@ -32,7 +32,6 @@ node {
         }
 
         stage('Do you want to deploy?') {
-          agent none
             steps {
                 script {
                     env.TAG_ON_DOCKER_HUB = input message: 'User input required',
