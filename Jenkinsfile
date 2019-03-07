@@ -3,7 +3,7 @@ node {
     deleteDir()
 
     environment {
-        ENV_NAME = "${env.BRANCH_NAME}"
+        ENVIRONMENT_NAME = "${env.BRANCH_NAME}"
         USER_NAME = ""
         DEV_SERVER = "dev_server.com"
         UAT_SERVER = "uat_server.com"
@@ -17,7 +17,7 @@ node {
         	checkout scm
         }
         stage ('install dependencies') {
-        	sh "echo 'shell scripts to build project...'"
+        	sh "echo 'shell scripts to build project...'"${ENVIRONMENT_NAME}
         }
         stage ('Tests') {
 	        parallel 'static': {
